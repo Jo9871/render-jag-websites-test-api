@@ -1,0 +1,17 @@
+GET http://localhost:5000/v1/transactions/income
+
+###
+
+POST http://localhost:5000/v1/transactions/income
+
+###
+
+GET http://localhost:5000/v1/transactions/income/:id
+
+###
+
+DELETE http://localhost:5000/v1/transactions/income/:id
+
+###
+
+PATCH http://localhost:5000/v1/transactions/income/:id

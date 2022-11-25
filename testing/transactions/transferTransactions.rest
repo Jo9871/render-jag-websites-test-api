@@ -1,0 +1,17 @@
+GET http://localhost:5000/v1/transactions/transfers
+
+###
+
+POST http://localhost:5000/v1/transactions/transfers
+
+###
+
+GET http://localhost:5000/v1/transactions/transfers/:id
+
+###
+
+DELETE http://localhost:5000/v1/transactions/transfers/:id
+
+###
+
+PATCH http://localhost:5000/v1/transactions/transfers/:id

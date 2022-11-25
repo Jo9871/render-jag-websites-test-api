@@ -1,0 +1,17 @@
+GET http://localhost:5000/v1/lists/moneypockets
+
+###
+
+POST http://localhost:5000/v1/lists/moneypockets
+
+###
+
+GET http://localhost:5000/v1/lists/moneypockets/:id
+
+###
+
+DELETE http://localhost:5000/v1/lists/moneypockets/:id
+
+###
+
+PATCH http://localhost:5000/v1/lists/moneypockets/:id
