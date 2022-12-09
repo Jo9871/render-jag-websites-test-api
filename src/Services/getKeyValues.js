@@ -4,9 +4,8 @@ import { keyValuesModel } from "../Config/Database Configs/Work/Schema/Tesco/key
 
 export const getKeyValues = () => {
   setInterval(function () {
-    console.log(`This function is running every second.`)
     let date = new Date();
-    if (date.getHours() == 21) {
+//     if (date.getHours() == 21) {
     axios
       .get(
         `https://api.sheety.co/cd2628e2795737a00f7dfd4fcf3d4c6f/mainFinancialTracker/keyFigures`
@@ -30,7 +29,7 @@ export const getKeyValues = () => {
         );
         getTotalBalance(res.data.keyFigures[0].totalBalanceOfAccounts);
       });
-    }
+//     }
   }, 1000 * 60);
 };
 
