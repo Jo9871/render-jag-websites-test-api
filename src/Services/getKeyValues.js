@@ -4,7 +4,7 @@ import { keyValuesModel } from "../Config/Database Configs/Work/Schema/Tesco/key
 
 export const getKeyValues = () => {
   setInterval(function () {
-    console.log(`This function is running every second.)
+    console.log(`This function is running every second.`)
     // let date = new Date();
     // if (date.getHours() == 21) {
 //     axios
