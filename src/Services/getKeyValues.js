@@ -11,8 +11,8 @@ export const getKeyValues = () => {
         `https://api.sheety.co/cd2628e2795737a00f7dfd4fcf3d4c6f/mainFinancialTracker/keyFigures`
       )
       .then((res) => {
-        console.log(res);
-        console.log(res.data.keyFigures);
+//         console.log(res);
+//         console.log(res.data.keyFigures);
         getNextPayEstimate(res.data.keyFigures[0].estimatedPay);
         getCashBalanceTotal(res.data.keyFigures[0].cashBalance);
         getNatWestCurrentAccountBalanceTotal(
@@ -30,7 +30,7 @@ export const getKeyValues = () => {
         getTotalBalance(res.data.keyFigures[0].totalBalanceOfAccounts);
       });
 //     }
-  }, 1000 * 60);
+  }, 1000 * 60 * 60 * 24);
 };
 
 const getNextPayEstimate = (estimatedPay) => {
