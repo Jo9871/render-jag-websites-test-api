@@ -1,36 +1,36 @@
 import axios from "axios";
-import { keyValuesModel } from "../Config/Database Configs/Work/Schema/Tesco/keyValues.js";
 import { formatCurrency } from "../API/v1/Helpers/formatter.js";
+import { keyValuesModel } from "../Config/Database Configs/Work/Schema/Tesco/keyValues.js";
 
 export const getKeyValues = () => {
   setInterval(function () {
-    let date = new Date();
+    // let date = new Date();
     // if (date.getHours() == 21) {
-    // axios
-    //   .get(
-    //     `https://api.sheety.co/cd2628e2795737a00f7dfd4fcf3d4c6f/mainFinancialTracker/keyFigures`
-    //   )
-    //   .then((res) => {
-    //     console.log(res);
-    //     console.log(res.data.keyFigures);
-    //     getNextPayEstimate(res.data.keyFigures[0].estimatedPay);
-    //     getCashBalanceTotal(res.data.keyFigures[0].cashBalance);
-    //     getNatWestCurrentAccountBalanceTotal(
-    //       res.data.keyFigures[0].natWestCurrentAccountBalance
-    //     );
-    //     getNatWestSavingsAccountBalanceTotal(
-    //       res.data.keyFigures[0].natWestSavingsAccountBalance
-    //     );
-    //     getFluidCreditCardBalanceTotal(
-    //       res.data.keyFigures[0].fluidCreditCardBalance
-    //     );
-    //     getMonzoCurrentAccountBalanceTotal(
-    //       res.data.keyFigures[0].monzoCurrentAccountBalance
-    //     );
-    //     getTotalBalance(res.data.keyFigures[0].totalBalanceOfAccounts);
-    //   }).;
+    axios
+      .get(
+        `https://api.sheety.co/cd2628e2795737a00f7dfd4fcf3d4c6f/mainFinancialTracker/keyFigures`
+      )
+      .then((res) => {
+        console.log(res);
+        console.log(res.data.keyFigures);
+        getNextPayEstimate(res.data.keyFigures[0].estimatedPay);
+        getCashBalanceTotal(res.data.keyFigures[0].cashBalance);
+        getNatWestCurrentAccountBalanceTotal(
+          res.data.keyFigures[0].natWestCurrentAccountBalance
+        );
+        getNatWestSavingsAccountBalanceTotal(
+          res.data.keyFigures[0].natWestSavingsAccountBalance
+        );
+        getFluidCreditCardBalanceTotal(
+          res.data.keyFigures[0].fluidCreditCardBalance
+        );
+        getMonzoCurrentAccountBalanceTotal(
+          res.data.keyFigures[0].monzoCurrentAccountBalance
+        );
+        getTotalBalance(res.data.keyFigures[0].totalBalanceOfAccounts);
+      });
     // }
-  }, 1000 * 60 * 60);
+  }, 1000);
 };
 
 const getNextPayEstimate = (estimatedPay) => {
