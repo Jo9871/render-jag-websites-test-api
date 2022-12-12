@@ -1,12 +1,12 @@
 import moment from "moment";
 
-import {
-  success as successFunc,
-  error as errorFunc,
-} from "../../../Helpers/sendResponse.js";
-import { formatCurrency } from "../../../Helpers/formatter.js";
-import { getTimeBetween } from "../../../Helpers/utils.js";
 import { keyValuesModel } from "../../../../../Config/Database Configs/Work/Schema/Tesco/keyValues.js";
+import { keyValuesUpdate } from "../../../../../Services/getKeyValues.js";
+import { formatCurrency } from "../../../Helpers/formatter.js";
+import {
+  error as errorFunc, success as successFunc
+} from "../../../Helpers/sendResponse.js";
+import { getTimeBetween } from "../../../Helpers/utils.js";
 
 // Returns all Expense Transaction in the database in an array of transaction objects.
 export const getKeyValues = async (req, res) => {
@@ -51,6 +51,21 @@ export const getEstimatedPay = async (req, res) => {
 
     res.status(200).json({
       estimatedPay: keyValues.estimatedNextPay,
+    });
+  } catch (error) {
+    // errorFunc(res, res, 200, error);
+    res.status(400).json({ message: `Error`, errorMessage: error });
+  }
+};
+
+// Updates the Key Values entry in Mongo Database using Sheetly API that is connected to Main Financial Tracker Google Sheet.
+export const updateKeyValues = async (req, res) => {
+  try {
+    const response = await keyValuesUpdate()
+    res.status(200).json({
+      success: true,
+      message: `The request has successfully ran, and the Key Figures has been updated. The old and new figures are shown below.`,
+      keyFigures: response
     });
   } catch (error) {
     // errorFunc(res, res, 200, error);

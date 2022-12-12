@@ -1,11 +1,11 @@
-import { getTimeBetween } from "./API/v1/Helpers/utils.js";
-import {} from "dotenv/config";
-import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
+import { } from "dotenv/config";
+import express from "express";
+import { getTimeBetween } from "./API/v1/Helpers/utils.js";
 
 const app = express();
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT || 5000;
 
 import { getKeyValues } from "./Services/getKeyValues.js";
 getKeyValues();
@@ -34,8 +34,8 @@ import cookieParser from "cookie-parser";
 app.use(cookieParser());
 
 import v1Routes from "./API/v1/index.js";
-app.use("/v1", v1Routes);
 import v2Routes from "./API/v2/index.js";
+app.use("/v1", v1Routes);
 app.use("/v2", v2Routes);
 
 app.get("/", async (req, res) => {

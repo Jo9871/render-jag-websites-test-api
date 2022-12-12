@@ -3,55 +3,73 @@ import { formatCurrency } from "../API/v1/Helpers/formatter.js";
 import { keyValuesModel } from "../Config/Database Configs/Work/Schema/Tesco/keyValues.js";
 
 export const getKeyValues = () => {
-  setInterval(function () {
-    let date = new Date();
-//     if (date.getHours() == 21) {
-    axios
-      .get(
-        `https://api.sheety.co/cd2628e2795737a00f7dfd4fcf3d4c6f/mainFinancialTracker/keyFigures`
-      )
-      .then((res) => {
-//         console.log(res);
-//         console.log(res.data.keyFigures);
-        getNextPayEstimate(res.data.keyFigures[0].estimatedPay);
-        getCashBalanceTotal(res.data.keyFigures[0].cashBalance);
-        getNatWestCurrentAccountBalanceTotal(
-          res.data.keyFigures[0].natWestCurrentAccountBalance
-        );
-        getNatWestSavingsAccountBalanceTotal(
-          res.data.keyFigures[0].natWestSavingsAccountBalance
-        );
-        getFluidCreditCardBalanceTotal(
-          res.data.keyFigures[0].fluidCreditCardBalance
-        );
-        getMonzoCurrentAccountBalanceTotal(
-          res.data.keyFigures[0].monzoCurrentAccountBalance
-        );
-        getTotalBalance(res.data.keyFigures[0].totalBalanceOfAccounts);
-      })
-     .catch(function (error) {
-    if (error.response) {
-      // The request was made and the server responded with a status code
-      // that falls out of the range of 2xx
-      console.log(error.response.data);
-      console.log(error.response.status);
-      console.log(error.response.headers);
-    } else if (error.request) {
-      // The request was made but no response was received
-      // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-      // http.ClientRequest in node.js
-      console.log(error.request);
-    } else {
-      // Something happened in setting up the request that triggered an Error
-      console.log('Error', error.message);
-    }
-    console.log(error.config);
-  })  ;
-//     }
-  }, 1000 * 60 * 60 * 24);
+  setInterval(keyValuesUpdate, 1000 * 60 * 60 * 24);
 };
 
-const getNextPayEstimate = (estimatedPay) => {
+
+export const keyValuesUpdate = async () => {
+  const sheetlyResponse = await axios
+    .get(
+      `https://api.sheety.co/cd2628e2795737a00f7dfd4fcf3d4c6f/mainFinancialTracker/keyFigures`
+    )
+
+  const newKeyFigures = sheetlyResponse.data.keyFigures[0]
+
+  const estimatedPayFigures = getNextPayEstimate(newKeyFigures.estimatedPay);
+  const cashBalanceFigures = getCashBalanceTotal(newKeyFigures.cashBalance);
+  const natWestCurrentAccountBalanceFigures = getNatWestCurrentAccountBalanceTotal(
+    newKeyFigures.natWestCurrentAccountBalance
+  );
+  const natWestSavingsAccountBalanceFigures = getNatWestSavingsAccountBalanceTotal(
+    newKeyFigures.natWestSavingsAccountBalance
+  );
+  const fluidCreditCardBalanceFigures = getFluidCreditCardBalanceTotal(
+    newKeyFigures.fluidCreditCardBalance
+  );
+  const monzoCurrentAccountBalanceFigures = getMonzoCurrentAccountBalanceTotal(
+    newKeyFigures.monzoCurrentAccountBalance
+  );
+  const totalBalanceFigures = getTotalBalance(newKeyFigures.totalBalanceOfAccounts);
+
+const oldKeyFigures = await keyValuesModel.findOne(
+    { _id: `62813dbfc05bcb9137994251` })
+
+  const responseData = {
+    estimatedPayFigures:{
+      "oldFigure": oldKeyFigures.estimatedNextPay.number,
+      "newFigure": newKeyFigures.estimatedPay
+    },
+    cashBalanceFigures:{
+      "oldFigure": oldKeyFigures.cashBalance.number,
+      "newFigure": newKeyFigures.cashBalance
+    },
+    natWestCurrentAccountBalanceFigures:{
+      "oldFigure": oldKeyFigures.natWestCurrentAccountBalance.number,
+      "newFigure": newKeyFigures.natWestCurrentAccountBalance
+    },
+    natWestSavingsAccountBalanceFigures:{
+      "oldFigure": oldKeyFigures.natWestSavingsAccountBalance.number,
+      "newFigure": newKeyFigures.natWestSavingsAccountBalance
+    },
+    fluidCreditCardBalanceFigures:{
+      "oldFigure": oldKeyFigures.fluidCreditCardBalance.number,
+      "newFigure": newKeyFigures.fluidCreditCardBalance
+    },
+    monzoCurrentAccountBalanceFigures:{
+      "oldFigure": oldKeyFigures.monzoCurrentAccountBalance.number,
+      "newFigure": newKeyFigures.monzoCurrentAccountBalance
+    },
+    totalBalanceFigures:{
+      "oldFigure": oldKeyFigures.totalBalanceOfAccounts.number,
+      "newFigure": newKeyFigures.totalBalanceOfAccounts
+    }
+  }
+
+  // console.log(responseData)
+  return responseData
+}
+
+const getNextPayEstimate = async (estimatedPay) => {
   keyValuesModel.findOne(
     { _id: `62813dbfc05bcb9137994251` },
     async (err, data) => {
