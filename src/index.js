@@ -1,6 +1,6 @@
 import bodyParser from "body-parser";
 import cors from "cors";
-import { } from "dotenv/config";
+import {} from "dotenv/config";
 import express from "express";
 import { getTimeBetween } from "./API/v1/Helpers/utils.js";
 
@@ -37,6 +37,14 @@ import v1Routes from "./API/v1/index.js";
 import v2Routes from "./API/v2/index.js";
 app.use("/v1", v1Routes);
 app.use("/v2", v2Routes);
+
+app.get("/ping", async (req, res) => {
+  res.status(200).json({
+    response: "pong",
+    status: 200,
+    message: `The API is running.`,
+  });
+});
 
 app.get("/", async (req, res) => {
   res.status(200).json({
